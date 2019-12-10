@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shiro.dao.UserMapper">
+    <!--根据用户名查用户信息-->
+    <select id="findUserByName" resultType="User">
+        SELECT * FROM t_user WHERE userName=#{userName}
+    </select>
+    <!--根据用户名获取该用户拥有的角色-->
+    <select id="getRoles" parameterType="String" resultType="String">
+        SELECT r.roleName FROM t_user u
+        INNER JOIN t_role r ON u.roleId=r.id
+        WHERE u.`userName`=#{userName}
+    </select>
+    <select id="getPermissions" parameterType="String" resultType="String">
+        SELECT p.permissionName FROM t_user u
+        INNER JOIN t_role r ON u.roleId=r.id
+        INNER JOIN t_permission p ON p.roleId=r.id
+        WHERE u.`userName`=#{userName}
+    </select>
+
+</mapper>
